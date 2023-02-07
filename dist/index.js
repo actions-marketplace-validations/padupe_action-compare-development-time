@@ -10708,8 +10708,7 @@ async function run() {
                 branchEvent = href[1]
             }
 
-            const branchDefault = github.context.payload.default_branch
-            
+            const branchDefault = await getDateDefaultBranch(github.context.payload.repository.owner.login, github.context.payload.repository.name)
             const getDateDefaultBranch = await getLastCommitBranchDefault(github.context.payload.repository.owner.login, github.context.payload.repository.name)
             const getDateBranchEvent = await getLastCommitBranchBase(github.context.payload.repository.owner.login, github.context.payload.repository.name, branchEvent)
 
@@ -10723,6 +10722,15 @@ async function run() {
     } catch (error) {
         core.setFailed(`Error at Action: ${error}`)
     }
+}
+
+async function getDefaultBranch(repoOwner, repoName) {
+    const defaultBranch = await ocktokit.request('GET /repos/{owner}/{repo}', {
+        owner: repoOwner,
+        repo: repoName
+    })
+
+    return defaultBranch.data.default_branch
 }
 
 async function getLastCommitBranchDefault(repoOwner, repoName) {
