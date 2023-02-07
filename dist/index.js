@@ -10691,35 +10691,19 @@ const github = __nccwpck_require__(4176)
 
 const githubToken = core.getInput('githubToken')
 
-const ocktokit = new Octokit({
+const octokit = new Octokit({
     auth: githubToken
 })
 
 async function run() {
     try {
         if (githubToken) {
-            const href = github.context.ref.split('/')
-
-            console.log(href)
-
-            console.log("github context: ", github.context)
-            console.log("github ref: ", github.context.ref)
-            console.log("github owner: ", github.context.payload.repository.owner)
-            console.log("github pull request body: ", github.context.payload.pull_request.body)
-
-            core.setOutput(`Branch trigger action: ${href}`)
-
-            let branchEvent
-
-            if (href.length > 2) {
-                branchEvent = `${href[1]}/${href[2]}`
-            } else {
-                branchEvent = href[1]
-            }
+            const href = github.context.ref.split('/')[3]
 
             const branchDefault = await getDefaultBranch(github.context.payload.repository.owner.login, github.context.payload.repository.name)
+            const branchBase = await getBaseBranch(github.context.payload.repository.owner.login, github.context.payload.repository.name, href)
             const getDateDefaultBranch = await getLastCommitDefaultBranch(github.context.payload.repository.owner.login, github.context.payload.repository.name)
-            const getDateBranchEvent = await getLastCommitBranchBase(github.context.payload.repository.owner.login, github.context.payload.repository.name, branchEvent)
+            const getDateBranchEvent = await getLastCommitBranchBase(github.context.payload.repository.owner.login, github.context.payload.repository.name, branchBase)
 
             const interval = compareDate(getDateDefaultBranch.date, getDateBranchEvent.date)
 
@@ -10736,7 +10720,7 @@ async function run() {
 async function getDefaultBranch(repoOwner, repoName) {
     console.log('getDefaultBranch - ENTER')
 
-    const defaultBranch = await ocktokit.request('GET /repos/{owner}/{repo}', {
+    const defaultBranch = await octokit.request('GET /repos/{owner}/{repo}', {
         owner: repoOwner,
         repo: repoName
     })
@@ -10746,10 +10730,23 @@ async function getDefaultBranch(repoOwner, repoName) {
     return defaultBranch.data.default_branch
 }
 
+async function getBaseBranch(repoOwner, repoName, pullRequestNumber) {
+    console.log('getBaseBranch - ENTER')
+    const baseBranch = await octokit.request('GET /repos/{owner}/{repo}/pulls/{pull_number}', {
+        owner: repoOwner,
+        repo: repoName,
+        pull_number: pullRequestNumber
+    })
+
+    console.log(`Return at "getBaseBranch": ${baseBranch.data.head.ref}`)
+
+    return baseBranch.data.head.ref
+}
+
 async function getLastCommitDefaultBranch(repoOwner, repoName) {
     console.log('getLastCommitDefaultBranch - ENTER')
 
-    const commits = await ocktokit.request('GET /repos/{owner}/{repo}/commits', {
+    const commits = await octokit.request('GET /repos/{owner}/{repo}/commits', {
         owner: repoOwner,
         repo: repoName
     })
@@ -10768,7 +10765,7 @@ async function getLastCommitDefaultBranch(repoOwner, repoName) {
 async function getLastCommitBranchBase(repoOwner, repoName, branchRef) { 
     console.log('getLastCommitBranchBase - ENTER')
 
-    const commits = await ocktokit.request('GET /repos/{owner}/{repo}/commits/{ref}', {
+    const commits = await octokit.request('GET /repos/{owner}/{repo}/commits/{ref}', {
         owner: repoOwner,
         repo: repoName,
         ref: branchRef
