@@ -20,8 +20,7 @@ async function run() {
 
             const interval = compareDate(getDateDefaultBranch, getDateBranchEvent)
 
-            console.info(`This implementation has an interval of ${Number(interval)} days compared to branch ${branchDefault}.`)
-            core.setOutput(`This implementation has an interval of ${Number(interval)} days compared to branch ${branchDefault}.`)
+            core.info(`This implementation has an interval of ${Number(interval)} days compared to branch ${branchDefault}.`)
         } else {
             core.setFailed(`"githubToken" is required!`)
         }
@@ -62,8 +61,6 @@ async function getLastCommitDefaultBranch(repoOwner, repoName) {
         core.setFailed('Failure at "getLastCommitBranchDefault".')
     }
 
-    console.info(`Date - Default Branch: ${lastCommit.commit.author.date}`)
-
     return lastCommit.commit.author.date
 }
 
@@ -80,20 +77,12 @@ async function getLastCommitBranchBase(repoOwner, repoName, branchRef) {
         core.setFailed('Failure at "getLastCommitBranchBase".')
     }
 
-    console.info(`Date - Branch Base: ${lastCommit.commit.author.date}`)
-
     return lastCommit.commit.author.date
 }
 
 function compareDate(baseDate, lastDate) {
     const base = new Date(baseDate)
-    console.log(`dateBase: ${base}`)
-    console.log(`typeof: ${typeof(base)}`)
-    console.log(`getTime: ${base.getTime()}`)
     const last = new Date(lastDate)
-    console.log(`dateLast: ${last}`)
-    console.log(`typeof: ${typeof(last)}`)
-    console.log(`getTime: ${last.getTime()}`)
 
     const difference = last.getTime() - base.getTime()
 
