@@ -10749,6 +10749,8 @@ async function getLastCommitDefaultBranch(repoOwner, repoName) {
         core.setFailed('Failure at "getLastCommitBranchDefault".')
     }
 
+    console.info(`Date - Default Branch: ${lastCommit.commit.author.date}`)
+
     return lastCommit.commit.author.date
 }
 
@@ -10764,6 +10766,8 @@ async function getLastCommitBranchBase(repoOwner, repoName, branchRef) {
     if(!lastCommit) {
         core.setFailed('Failure at "getLastCommitBranchBase".')
     }
+
+    console.info(`Date - Branch Base: ${lastCommit.commit.author.date}`)
 
     return lastCommit.commit.author.date
 }
