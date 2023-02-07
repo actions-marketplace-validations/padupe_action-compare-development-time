@@ -13,6 +13,8 @@ async function run() {
         if (githubToken) {
             const href = github.context.payload.ref.split('/')
 
+            console.log(github.context.payload)
+
             let branchEvent
 
             if (href.length > 2) {
