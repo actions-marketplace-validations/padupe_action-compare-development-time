@@ -13,7 +13,7 @@ async function run() {
         if (githubToken) {
             const href = github.context.ref.split('/')
 
-            core.setCommandEcho(`GITHUB CONTEXT: ${github.context}`)
+            console.log(`${github.context}`)
 
             core.setOutput(`Branch trigger action: ${href}`)
 
@@ -42,20 +42,20 @@ async function run() {
 }
 
 async function getDefaultBranch(repoOwner, repoName) {
-    core.setCommandEcho('getDefaultBranch - ENTER')
+    console.log('getDefaultBranch - ENTER')
 
     const defaultBranch = await ocktokit.request('GET /repos/{owner}/{repo}', {
         owner: repoOwner,
         repo: repoName
     })
 
-    core.setCommandEcho(`Return at "getDefaultBranch": ${defaultBranch.data.default_branch}`)
+    console.log(`Return at "getDefaultBranch": ${defaultBranch.data.default_branch}`)
 
     return defaultBranch.data.default_branch
 }
 
 async function getLastCommitDefaultBranch(repoOwner, repoName) {
-    core.setCommandEcho('getLastCommitDefaultBranch - ENTER')
+    console.log('getLastCommitDefaultBranch - ENTER')
 
     const commits = await ocktokit.request('GET /repos/{owner}/{repo}/commits', {
         owner: repoOwner,
@@ -68,13 +68,13 @@ async function getLastCommitDefaultBranch(repoOwner, repoName) {
         core.setFailed('Failure at "getLastCommitBranchDefault".')
     }
 
-    core.setCommandEcho(`Return at "getLastCommitBranchDefault": ${lastCommit.commit.author.date}`)
+    console.log(`Return at "getLastCommitBranchDefault": ${lastCommit.commit.author.date}`)
     
     return lastCommit.commit.author.date
 }
 
 async function getLastCommitBranchBase(repoOwner, repoName, branchRef) { 
-    core.setCommandEcho('getLastCommitBranchBase - ENTER')
+    console.log('getLastCommitBranchBase - ENTER')
 
     const commits = await ocktokit.request('GET /repos/{owner}/{repo}/commits/{ref}', {
         owner: repoOwner,
@@ -88,20 +88,20 @@ async function getLastCommitBranchBase(repoOwner, repoName, branchRef) {
         core.setFailed('Failure at "getLastCommitBranchBase".')
     }
 
-    core.setCommandEcho(`Return at "getLastCommitBranchBase": ${lastCommit.commit.author.date}`)
+    console.log(`Return at "getLastCommitBranchBase": ${lastCommit.commit.author.date}`)
 
     return lastCommit.commit.author.date
 }
 
 function compareDate(baseDate, lastDate) {
-    core.setCommandEcho('compareDate - ENTER')
+    console.log('compareDate - ENTER')
 
     const base = new Date(baseDate)
     const last = new Date(lastDate)
 
     const difference = last.getTime() - base.getTime()
 
-    core.setCommandEcho(`Return at "compareDate": ${Math.ceil(difference / (1000 * 3600 * 24))}`)
+    console.log(`Return at "compareDate": ${Math.ceil(difference / (1000 * 3600 * 24))}`)
 
     return Math.ceil(difference / (1000 * 3600 * 24))
 }
