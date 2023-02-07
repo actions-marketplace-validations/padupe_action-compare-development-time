@@ -87,7 +87,13 @@ async function getLastCommitBranchBase(repoOwner, repoName, branchRef) {
 
 function compareDate(baseDate, lastDate) {
     const base = new Date(baseDate)
+    console.log(`dateBase: ${base}`)
+    console.log(`typeof: ${typeof(base)}`)
+    console.log(`getTime: ${base.getTime()}`)
     const last = new Date(lastDate)
+    console.log(`dateLast: ${last}`)
+    console.log(`typeof: ${typeof(last)}`)
+    console.log(`getTime: ${last.getTime()}`)
 
     const difference = last.getTime() - base.getTime()
 
