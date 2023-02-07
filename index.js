@@ -13,6 +13,8 @@ async function run() {
         if (githubToken) {
             const href = github.context.ref.split('/')
 
+            core.setOutput(`Branch trigger action: ${href}`)
+
             let branchEvent
 
             if (href.length > 2) {
