@@ -1,5 +1,9 @@
 name: "Compare Development Time"
 description: "This action calculates the time interval in days between a new implementation in the project."
+author: "Paulo Eduardo Peixoto"
+branding:
+  color: "purple"
+  icon: "clock"
 inputs:
   githubToken:
     description: "Token required to execute the action."
