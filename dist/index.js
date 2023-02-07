@@ -10700,7 +10700,10 @@ async function run() {
         if (githubToken) {
             const href = github.context.ref.split('/')
 
-            console.log(`${github.context}`)
+            console.log("github context: ", github.context)
+            console.log("github owner: ", github.context.payload.repository.owner)
+            console.log("github payload: ", github.context.payload)
+            console.log("github commits: ", github.context.payload.commits)
 
             core.setOutput(`Branch trigger action: ${href}`)
 
