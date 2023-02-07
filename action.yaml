@@ -1,0 +1,14 @@
+name: "Compare Development Time"
+description: "This action calculates the time interval in days between a new implementation in the project."
+inputs:
+  githubToken:
+    description: "Token required to execute the action."
+    required: true
+
+outputs:
+  suceess:
+    description: "Interval in days required for development."
+
+runs:
+  using: "node16"
+  main: "dist/index.js"
