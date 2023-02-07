@@ -10707,6 +10707,7 @@ async function run() {
 
             const interval = compareDate(getDateDefaultBranch.date, getDateBranchEvent.date)
 
+            console.info(`This implementation has an interval of ${interval} days compared to branch ${branchDefault}.`)
             core.setOutput(`This implementation has an interval of ${interval} days compared to branch ${branchDefault}.`)
         } else {
             core.setFailed(`"githubToken" is required!`)
