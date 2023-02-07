@@ -10708,7 +10708,7 @@ async function run() {
                 branchEvent = href[1]
             }
 
-            const branchDefault = await getDateDefaultBranch(github.context.payload.repository.owner.login, github.context.payload.repository.name)
+            const branchDefault = await getDefaultBranch(github.context.payload.repository.owner.login, github.context.payload.repository.name)
             const getDateDefaultBranch = await getLastCommitBranchDefault(github.context.payload.repository.owner.login, github.context.payload.repository.name)
             const getDateBranchEvent = await getLastCommitBranchBase(github.context.payload.repository.owner.login, github.context.payload.repository.name, branchEvent)
 
