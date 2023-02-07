@@ -13,6 +13,8 @@ async function run() {
         if (githubToken) {
             const href = github.context.ref.split('/')[3]
 
+            console.log("github.context.ref: ", github.context.ref)
+
             const branchDefault = await getDefaultBranch(github.context.payload.repository.owner.login, github.context.payload.repository.name)
             const branchBase = await getBaseBranch(github.context.payload.repository.owner.login, github.context.payload.repository.name, href)
             const getDateDefaultBranch = await getLastCommitDefaultBranch(github.context.payload.repository.owner.login, github.context.payload.repository.name)
@@ -50,6 +52,8 @@ async function getBaseBranch(repoOwner, repoName, pullRequestNumber) {
         repo: repoName,
         pull_number: pullRequestNumber
     })
+
+    console.log(baseBranch)
 
     console.log(`Return at "getBaseBranch": ${baseBranch.data.head.ref}`)
 
