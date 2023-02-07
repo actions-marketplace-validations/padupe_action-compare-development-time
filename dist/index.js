@@ -10698,7 +10698,7 @@ const octokit = new Octokit({
 async function run() {
     try {
         if (githubToken) {
-            const href = github.context.ref.split('/')[3]
+            const href = github.context.ref.split('/')[2]
 
             console.log("github.context.ref: ", github.context.ref)
 
