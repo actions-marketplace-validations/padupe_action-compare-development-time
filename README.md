@@ -39,3 +39,7 @@ jobs:
         with:
           githubToken: ${{ secrets.PAT_TOKEN }}
 ```
+
+## Output
+
+`interval` in days.
