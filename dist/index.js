@@ -10705,7 +10705,7 @@ async function run() {
             console.log("github context: ", github.context)
             console.log("github ref: ", github.context.ref)
             console.log("github owner: ", github.context.payload.repository.owner)
-            console.log("github payload: ", github.context.payload)
+            console.log("github pull request body: ", github.context.payload.pull_request.body)
 
             core.setOutput(`Branch trigger action: ${href}`)
 
