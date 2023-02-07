@@ -10698,9 +10698,7 @@ const ocktokit = new Octokit({
 async function run() {
     try {
         if (githubToken) {
-            const href = github.context.payload.ref.split('/')
-
-            console.log(github.context.payload)
+            const href = github.context.ref.split('/')
 
             let branchEvent
 
