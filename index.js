@@ -18,7 +18,7 @@ async function run() {
             const getDateDefaultBranch = await getLastCommitDefaultBranch(github.context.payload.repository.owner.login, github.context.payload.repository.name)
             const getDateBranchEvent = await getLastCommitBranchBase(github.context.payload.repository.owner.login, github.context.payload.repository.name, branchBase)
 
-            const interval = compareDate(getDateDefaultBranch.date, getDateBranchEvent.date)
+            const interval = compareDate(getDateDefaultBranch, getDateBranchEvent)
 
             console.info(`This implementation has an interval of ${Number(interval)} days compared to branch ${branchDefault}.`)
             core.setOutput(`This implementation has an interval of ${Number(interval)} days compared to branch ${branchDefault}.`)
