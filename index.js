@@ -27,6 +27,7 @@ async function run() {
         }
 
     } catch (error) {
+        console.log(error)
         core.setFailed(`Error at Action: ${error}`)
     }
 }
