@@ -6,6 +6,8 @@ Action that returns the interval (in days) between the start of development and 
 
 **NOTE**: This action performs a comment on the registered Pull Request.
 
+![Example Comment](./assets/comment-example.jpeg)
+
 ## Requiremets
 
 - Personal Access Token
