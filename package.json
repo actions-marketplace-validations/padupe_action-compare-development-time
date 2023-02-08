@@ -1,13 +1,20 @@
 {
   "name": "action-compare-development-time",
   "version": "1.1.0",
-  "description": "",
+  "description": "Action that returns the interval (in days) between the start of development and the opening of the Pull Request.",
   "main": "index.js",
+  "author": "Paulo Eduardo Peixoto <peixoto.pauloeduardo@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/padupe/action-compare-development-time/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/padupe/action-compare-development-time.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "@actions/core": "^1.10.0",
