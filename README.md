@@ -4,6 +4,8 @@
 
 Action that returns the interval (in days) between the start of development and the opening of the Pull Request.
 
+**NOTE**: This action performs a comment on the registered Pull Request.
+
 ## Requiremets
 
 - Personal Access Token
@@ -27,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Compare Development Time
-        uses: padupe/action-compare-development-time@1.1.0
+        uses: padupe/action-compare-development-time@1.2.0
         with:
           githubToken: ${{ secrets.PAT_TOKEN }}
 ```
@@ -35,7 +37,7 @@ jobs:
 ## General use
 
 ```yaml
-        uses: padupe/action-compare-development-time@1.1.0
+        uses: padupe/action-compare-development-time@1.2.0
         with:
           githubToken: ${{ secrets.PAT_TOKEN }}
 ```
