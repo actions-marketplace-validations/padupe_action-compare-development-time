@@ -35,7 +35,7 @@ jobs:
 ## General use
 
 ```yaml
-        uses: padupe/action-compare-development-time@1.0.0
+        uses: padupe/action-compare-development-time@1.1.0
         with:
           githubToken: ${{ secrets.PAT_TOKEN }}
 ```
