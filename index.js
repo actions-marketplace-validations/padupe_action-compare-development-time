@@ -11,14 +11,16 @@ const octokit = new Octokit({
 async function run() {
     try {
         if (githubToken) {
-            const href = github.context.ref.split('/')[2]
+            const pullRequestNumber = github.context.ref.split('/')[2]
 
             const branchDefault = await getDefaultBranch(github.context.payload.repository.owner.login, github.context.payload.repository.name)
-            const branchBase = await getBaseBranch(github.context.payload.repository.owner.login, github.context.payload.repository.name, href)
+            const branchBase = await getBaseBranch(github.context.payload.repository.owner.login, github.context.payload.repository.name, pullRequestNumber)
             const getDateDefaultBranch = await getLastCommitDefaultBranch(github.context.payload.repository.owner.login, github.context.payload.repository.name)
             const getDateBranchEvent = await getLastCommitBranchBase(github.context.payload.repository.owner.login, github.context.payload.repository.name, branchBase)
 
             const interval = compareDate(getDateDefaultBranch, getDateBranchEvent)
+
+            await createComment(github.context.payload.repository.owner.login, github.context.payload.repository.name, pullRequestNumber, `This implementation has an interval of ${interval} days compared to branch ${branchDefault}.`)
 
             core.info(`This implementation has an interval of ${interval} days compared to branch ${branchDefault}.`)
             core.setOutput(`${interval}`)
@@ -79,6 +81,21 @@ async function getLastCommitBranchBase(repoOwner, repoName, branchRef) {
     }
 
     return lastCommit.commit.author.date
+}
+
+async function createComment(repoOwner, repoName, pullRequestNumber, message) {
+    const messagePr = await octokit.request('POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
+        owner: repoOwner,
+        repo: repoName,
+        issue_number: pullRequestNumber,
+        body: message
+    })
+
+    if(messagePr.status != 201) {
+        core.setFailed(`Error creating comment on pull request ${pullRequestNumber}.`)
+    }
+
+    return messagePr.data
 }
 
 function compareDate(baseDate, lastDate) {
